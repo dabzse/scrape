@@ -7,7 +7,6 @@
 # useful for handling different item types with a single interface
 
 import sqlite3
-from itemadapter import ItemAdapter
 
 
 class ScrapePipeline(object):
@@ -34,9 +33,11 @@ class ScrapePipeline(object):
         return item
 
     def store(self, item):
-        self.cursor.execute("""INSERT INTO scraped_data (title, author, tag) VALUES(?, ?, ?)""", (
-            item['title'][0],
-            item['author'][0],
-            str(item['tag'])
-        ))
+        self.cursor.execute("""
+                            INSERT INTO scraped_data (title, author, tag)
+                            VALUES(?, ?, ?)""", (
+                                item['title'][0],
+                                item['author'][0],
+                                str(item['tag'])
+                            ))
         self.connection.commit()
